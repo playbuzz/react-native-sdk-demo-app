@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import { SelectionCard } from '../views/SelectionCard.tsx';
-import { MiniPlayerPosition } from  '@gini-npm/exco-react-native-sdk/ExCoSDK.tsx'
+import React from "react";
+// import { MiniPlayerPosition } from  '@gini-npm/exco-react-native-sdk/ExCoSDK.tsx'
 
 const styles = StyleSheet.create({
   textMain: {
@@ -37,7 +38,7 @@ export const MiniPlayerConfigurationScreen = ({ navigation }) => {
        <SelectionCard
           selectionName="None"
           selectionAbout="Player without MiniPlayer"
-          onSelectionClick={() => navigation.navigate('PlayerScreen',{miniPlayerType: MiniPlayerPosition.MINI_PLAYER_NONE })}>
+          onSelectionClick={() => navigation.navigate('PlayerScreen',{miniPlayerType: -1 })}>
       </SelectionCard>
     </View>
   );

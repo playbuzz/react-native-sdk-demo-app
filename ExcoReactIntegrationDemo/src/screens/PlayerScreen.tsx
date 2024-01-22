@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, ScrollView, Text, StyleSheet, SafeAreaView, Animated } from 'react-native';
-import { ExCoPlayerView } from  '@gini-npm/exco-react-native-sdk/ExCoSDK.tsx'
+// import { ExCoPlayerView } from  '@gini-npm/exco-react-native-sdk/ExCoSDK.tsx'
 
 const TextUtils = {
   DUMMY_TEXT: `
@@ -47,8 +47,8 @@ export const PlayerScreen = ({ route, navigation }) => {
         <ScrollView
           scrollEventThrottle={16}
           onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollState } } }])}>
-          <View style={styles.playerContainer}>
-            <ExCoPlayerView
+          {/* <View style={styles.playerContainer}> */}
+            {/* <ExCoPlayerView
               padding={15}
               playerID="8bd39116-eacb-4b4e-a160-bedd5d71ce1c"
               appCategoryArray={["Sport", "Game", "Television", "AI", "Investments"]}
@@ -60,8 +60,8 @@ export const PlayerScreen = ({ route, navigation }) => {
               miniPlayerType={miniPlayerType}
               onPlayerEvent={handlePlayerEvent}
               onPlayerError={handlePlayerError}
-            />
-          </View>
+            /> */}
+          {/* </View> */}
           <View style={styles.textAreaContainer}>
             <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
             <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>

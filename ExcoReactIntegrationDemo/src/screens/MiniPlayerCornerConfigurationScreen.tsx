@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
 import { OptionButton } from '../views/OptionButton.tsx';
-import { MiniPlayerPosition } from  '@gini-npm/exco-react-native-sdk/ExCoSDK.tsx'
+import React from "react";
+// import { MiniPlayerPosition } from  '@gini-npm/exco-react-native-sdk/ExCoSDK.tsx'
 
 const styles = StyleSheet.create({
   textMain: {
@@ -26,19 +27,19 @@ export const MiniPlayerCornerConfigurationScreen = ({ navigation }) => {
         </Text>
         <OptionButton
             buttonText="Top Left"
-            onClickNavigate={ () => navigation.navigate('PlayerScreen',{miniPlayerType:MiniPlayerPosition.MINI_PLAYER_CORNER_TOP_LEFT})}>
+            onClickNavigate={ () => navigation.navigate('PlayerScreen',{miniPlayerType:1})}>
         </OptionButton>
         <OptionButton
             buttonText="Top Right"
-            onClickNavigate={ () => navigation.navigate('PlayerScreen',{miniPlayerType:MiniPlayerPosition.MINI_PLAYER_CORNER_TOP_RIGHT})}>
+            onClickNavigate={ () => navigation.navigate('PlayerScreen',{miniPlayerType:0})}>
         </OptionButton>
         <OptionButton
             buttonText="Bottom Left"
-            onClickNavigate={ () => navigation.navigate('PlayerScreen',{miniPlayerType:MiniPlayerPosition.MINI_PLAYER_CORNER_BOTTOM_LEFT})}>
+            onClickNavigate={ () => navigation.navigate('PlayerScreen',{miniPlayerType:3})}>
         </OptionButton>
         <OptionButton
             buttonText="Bottom Right"
-            onClickNavigate={ () => navigation.navigate('PlayerScreen',{miniPlayerType:MiniPlayerPosition.MINI_PLAYER_CORNER_BOTTOM_RIGHT})}>
+            onClickNavigate={ () => navigation.navigate('PlayerScreen',{miniPlayerType:2})}>
         </OptionButton>
       </View>
     );

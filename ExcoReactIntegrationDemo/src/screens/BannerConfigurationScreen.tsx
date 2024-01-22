@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { OptionButton } from '../views/OptionButton'
-import { MiniPlayerPosition } from  '@gini-npm/exco-react-native-sdk/ExCoSDK.tsx'
+import React from 'react';
+// import { MiniPlayerPosition } from  '@gini-npm/exco-react-native-sdk/ExCoSDK.tsx'
 
 const styles = StyleSheet.create({
     textMain: {
@@ -26,11 +27,11 @@ export const BannerConfigurationScreen = ({ navigation }) => {
         </Text>
         <OptionButton
             buttonText="Banner Top"
-            onClickNavigate={() => navigation.navigate('PlayerScreen',{miniPlayerType:MiniPlayerPosition.MINI_PLAYER_BANNER_TOP})}>
+            onClickNavigate={() => navigation.navigate('PlayerScreen',{miniPlayerType:4})}>
         </OptionButton>
         <OptionButton
             buttonText="Banner Bottom"
-            onClickNavigate={() => navigation.navigate('PlayerScreen',{miniPlayerType:MiniPlayerPosition.MINI_PLAYER_BANNER_BOTTOM})}>
+            onClickNavigate={() => navigation.navigate('PlayerScreen',{miniPlayerType:5})}>
         </OptionButton>
       </View>
     );
