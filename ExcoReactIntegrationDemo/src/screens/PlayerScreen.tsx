@@ -87,7 +87,10 @@ export const PlayerScreen = ({ route, navigation }) => {
       <SafeAreaView style={styles.container}>
         <ScrollView
           scrollEventThrottle={16}
-          onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollState } } }])}>
+          onScroll={
+            Animated.event([{ nativeEvent: { contentOffset: { y: scrollState } } }],
+            { useNativeDriver: false } 
+          )}>
           <View style={styles.playerContainer}>
             <ExcoPlayerView 
               nativeConfig = { { 
