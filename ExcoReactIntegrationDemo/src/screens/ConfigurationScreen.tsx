@@ -76,18 +76,19 @@ export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
   const appName = DeviceInfo.getApplicationName()
   const yourAppBundle = "YourAppBundle"
   const [playerId, setPlayerId] = useState('8bd39116-eacb-4b4e-a160-bedd5d71ce1c');
-  const [appCategory, setAppCategory] = useState('Sport,Cinema');
+  const [appCategory, setAppCategory] = useState('Sport, Movie');
   const [appStoreUrl, setAppStoreUrl] = useState('https://appStoreUrl');
+  const [appStoreId, setAppStoreId] = useState('412491294123');
+
   const [appVersion, setAppVersion] = useState('1.0.1');
-  const [appDevices, setAppDevices] = useState('app');
+  const [appDevices, setAppDevices] = useState('Pixel 6');
   const [ifa, setIfa] = useState('19421jfas9f214jfs');
 
   const navigateNextScreen = () => {
     navigation.navigate('MiniPlayerConfigurationScreen',{
-      appName:appName,
-      yourAppBundle:yourAppBundle,
       playerId:playerId,
       appCategory:appCategory,
+      appStoreId:appStoreId,
       appStoreUrl:appStoreUrl,
       appVersion:appVersion,
       appDevices:appDevices,
@@ -129,6 +130,13 @@ export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
         <InputCard
           inputName="App Store URL"
           inputTip="Enter your app's store URL"
+          inputText={appStoreId}
+          readOnly={false}
+          changeValue={setAppStoreId}
+        />
+        <InputCard
+          inputName="App Store Id"
+          inputTip="Enter your app's store Id"
           inputText={appStoreUrl}
           readOnly={false}
           changeValue={setAppStoreUrl}

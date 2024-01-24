@@ -6,6 +6,7 @@ import { MiniPlayerConfigurationScreen } from './screens/MiniPlayerConfiguration
 import { BannerConfigurationScreen } from './screens/BannerConfigurationScreen.tsx';
 import { MiniPlayerCornerConfigurationScreen } from './screens/MiniPlayerCornerConfigurationScreen.tsx';
 import { PlayerScreen } from './screens/PlayerScreen.tsx';
+import { IntroductionScreen } from './screens/IntroductionScreen.tsx';
 
 const Stack = createStackNavigator();
 
@@ -19,7 +20,8 @@ const App = () => {
 
 const AppNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName="PlayerAttributesConfigurationScreen">
+    <Stack.Navigator initialRouteName="IntroductionScreen">
+      <Stack.Screen name="IntroductionScreen" component={IntroductionScreen} />
       <Stack.Screen name="PlayerAttributesConfigurationScreen" component={PlayerAttributesConfigurationScreen} />
       <Stack.Screen name="MiniPlayerConfigurationScreen" component={MiniPlayerConfigurationScreen} />
       <Stack.Screen name="BannerConfigurationScreen" component={BannerConfigurationScreen} />

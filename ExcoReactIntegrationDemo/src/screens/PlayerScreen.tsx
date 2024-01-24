@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import { View, ScrollView, Text, StyleSheet, SafeAreaView, Animated } from 'react-native';
-// import { ExCoPlayerView } from  '@gini-npm/exco-react-native-sdk/ExCoSDK.tsx'
+import { 
+  ExcoPlayerView , 
+  ExcoPlayerPosition , 
+  ExcoPlayerViewControlDelegate, 
+  ExcoPlayerViewErrorDelegate, 
+  ExcoPlayerViewAdDelegate
+ } from '@gini-npm/react-native-exco-player';
 
 const TextUtils = {
   DUMMY_TEXT: `
@@ -29,39 +35,77 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#000',
   },
+  player: {
+    width: 320,
+    height: 180,
+  }
 });
 
 
+
 export const PlayerScreen = ({ route, navigation }) => {
-    const [ scrollState, setScrollState ] = useState(new Animated.Value(0));
-    const { miniPlayerType } = route.params;
-  
-    const handlePlayerEvent = (eventData:any) => {
-      console.log('ExCoPlayerEvent:', eventData);
-    };
-    const handlePlayerError = (eventData:any) => {
-      console.log('ExCoPlayerError', eventData);
-    };
+  const { 
+    miniPlayerType,
+    playerId,
+    appCategory,
+    appStoreId,
+    appStoreUrl,
+    appVersion,
+    appDevices,
+    ifa
+  } = route.params;
+
+  const appCategoryArray = appCategory.split(',').map((category: string) => category.trim());
+
+  const scrollState = new Animated.Value(0);
+
+    const delegateControl = new ExcoPlayerViewControlDelegate(
+      () => console.log('Player Initiated'),
+      () => console.log('Player Loaded'),
+      () => console.log('Player Playing'),
+      () => console.log('Player Paused'),
+      () => console.log('Player Muted'),
+      () => console.log('Player Unmuted'),
+      () => console.log('Player Closed')
+    );
+    const delegateError = new ExcoPlayerViewErrorDelegate(
+      (payload) => console.log('error message: ' + payload)
+    );
+    const delegateAds = new ExcoPlayerViewAdDelegate(
+      () => console.log('Player Ad Init'),
+      () => console.log('Player Ad Started'),
+      (payload) => console.log('Player Ad Impression ' + payload),
+      () => console.log('Player Ad FirstQuartile'),
+      () => console.log('Player Ad Midpoint'),
+      () => console.log('Player Ad ThirdQuartile'),
+      () => console.log('Player Ad Completed'),
+      () => console.log('Player Ad Clicked'),
+      () => console.log('Player Ad Skipped'),
+    );
+    
     return (
       <SafeAreaView style={styles.container}>
         <ScrollView
           scrollEventThrottle={16}
           onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollState } } }])}>
-          {/* <View style={styles.playerContainer}> */}
-            {/* <ExCoPlayerView
-              padding={15}
-              playerID="8bd39116-eacb-4b4e-a160-bedd5d71ce1c"
-              appCategoryArray={["Sport", "Game", "Television", "AI", "Investments"]}
-              appStoreId="yourAppStoreId"
-              appStoreUrl="yourAppStoreUrl"
-              appVersion="yourAppVersion"
-              deviceId="yourDeviceId"
-              ifa="yourIFA"
-              miniPlayerType={miniPlayerType}
-              onPlayerEvent={handlePlayerEvent}
-              onPlayerError={handlePlayerError}
-            /> */}
-          {/* </View> */}
+          <View style={styles.playerContainer}>
+            <ExcoPlayerView 
+              nativeConfig = { { 
+                playerID: playerId,
+                appCategories : appCategoryArray,
+                appStoreId: appStoreId,
+                appStoreUrl: appStoreUrl,
+                appVersion: appVersion,
+                deviceId: appDevices,
+                ifa : ifa,
+                playerType : miniPlayerType,
+              } } 
+              style = {styles.player}
+              delegateControl = {delegateControl}
+              delegateAds = {delegateAds}
+              delegateErrors = {delegateError}
+            />
+          </View> 
           <View style={styles.textAreaContainer}>
             <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
             <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
