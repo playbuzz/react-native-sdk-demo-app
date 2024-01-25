@@ -14,6 +14,16 @@ export const SelectionCard = ({ selectionName, selectionAbout, onSelectionClick 
   );
 };
 
+export const SelectionNextCard = ({ selectionName, onSelectionClick }) => {
+  return (
+    <TouchableOpacity onPress={onSelectionClick} style={styleSelectionCardNext.card}>
+      <View style={styleSelectionCardNext.content}>
+        <Text style={styleSelectionCardNext.selectionName}>{selectionName}</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
 const styles = StyleSheet.create({
   card: {
     borderRadius: 24,
@@ -46,4 +56,22 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SelectionCard;
+
+const styleSelectionCardNext = StyleSheet.create({
+  card: {
+    borderRadius: 24,
+    backgroundColor: '#12339A',
+    margin: 16,
+    padding: 16,
+  },
+  content: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  selectionName: {
+    color: 'white',
+    fontSize: 18,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+});

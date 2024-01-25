@@ -20,6 +20,15 @@ const styles = StyleSheet.create({
 });
 
 export const BannerConfigurationScreen = ({ navigation, route}) => {
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerStyle: {
+        backgroundColor: '#12339A', 
+      },
+      headerTintColor: 'white',
+    });
+  }, [navigation]);
+
     return (
       <View style={styles.container}>
         <Text style={styles.textMain} >

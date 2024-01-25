@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, ScrollView, Text, StyleSheet, SafeAreaView, Animated } from 'react-native';
 import { 
   ExcoPlayerView , 
-  ExcoPlayerPosition , 
   ExcoPlayerViewControlDelegate, 
   ExcoPlayerViewErrorDelegate, 
   ExcoPlayerViewAdDelegate
@@ -44,6 +43,15 @@ const styles = StyleSheet.create({
 
 
 export const PlayerScreen = ({ route, navigation }) => {
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerStyle: {
+        backgroundColor: '#12339A', 
+      },
+      headerTintColor: 'white',
+    });
+  }, [navigation]);
+
   const { 
     miniPlayerType,
     playerId,

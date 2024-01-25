@@ -17,6 +17,14 @@ const styles = StyleSheet.create({
 });
 
 export const MiniPlayerConfigurationScreen = ({ route, navigation }) => {
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerStyle: {
+        backgroundColor: '#12339A', 
+      },
+      headerTintColor: 'white',
+    });
+  }, [navigation]);
 
   return (
     <View>

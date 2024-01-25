@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, ScrollView, Text, StyleSheet, Button, TextInput } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import { SelectionNextCard } from '../views/SelectionCard';
 
 const Styles = StyleSheet.create({
     container: {
@@ -22,10 +23,6 @@ const Styles = StyleSheet.create({
       borderColor: '#D1D5DB',
       height: 55,
       padding: 8,
-    },
-    button: {
-      marginTop: 20,
-      height: 100,
     },
     buttonText: {
       color: 'white',
@@ -73,6 +70,15 @@ const InputCard = ({ inputName, inputTip, inputText, readOnly, changeValue }) =>
 };
   
 export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
+  React.useLayoutEffect(() => {
+    navigation.setOptions({
+      headerStyle: {
+        backgroundColor: '#12339A', 
+      },
+      headerTintColor: 'white',
+    });
+  }, [navigation]);
+
   const appName = DeviceInfo.getApplicationName()
   const yourAppBundle = "YourAppBundle"
   const [playerId, setPlayerId] = useState('8bd39116-eacb-4b4e-a160-bedd5d71ce1c');
@@ -163,13 +169,11 @@ export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
           changeValue={setIfa}
         />
         <View style={Styles.inputCardContainer}>
-          <Button
-              style={Styles.buttonNext}
-              title="Next"
-              onPress={navigateNextScreen}
-              color="#12339A"
-        />
-    </View>
+          <SelectionNextCard
+            selectionName="Next"
+            onSelectionClick={() => navigateNextScreen()}>
+          </SelectionNextCard>
+        </View>
       </ScrollView>
     </View>
   );
