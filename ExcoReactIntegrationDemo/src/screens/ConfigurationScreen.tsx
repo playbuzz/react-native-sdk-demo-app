@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, ScrollView, Text, StyleSheet, Button, TextInput } from 'react-native';
+import { View, ScrollView, Text, StyleSheet, TextInput, KeyboardAvoidingView, Platform,
+} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { SelectionNextCard } from '../views/SelectionCard';
 
@@ -8,6 +9,28 @@ const Styles = StyleSheet.create({
       padding: 16,
       flex: 1,
       backgroundColor: '#fff',
+    },
+    keyboardAvoidingContainer: {
+      flex: 1,
+    },
+    inner: {
+      padding: 24,
+      flex: 1,
+      justifyContent: 'space-around',
+    },
+    header: {
+      fontSize: 36,
+      marginBottom: 48,
+    },
+    textInput: {
+      height: 40,
+      borderColor: '#000000',
+      borderBottomWidth: 1,
+      marginBottom: 36,
+    },
+    btnContainer: {
+      backgroundColor: 'white',
+      marginTop: 12,
     },
     appbar: {
       backgroundColor: '#12339A',
@@ -37,7 +60,7 @@ const Styles = StyleSheet.create({
       marginTop: 20,
     },
     inputButtonContainer: {
-      marginTop: 30,
+      marginVertical: 30,
     },
     inputCardHeaderText: {
       color: 'black',
@@ -104,6 +127,11 @@ export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
 
   return (
     <View style={Styles.container}>
+      <KeyboardAvoidingView
+              style={Styles.keyboardAvoidingContainer}
+              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+              keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
+              >
       <ScrollView style = {{padding:0}}>
         <InputCard
           inputName="AppName"
@@ -168,13 +196,14 @@ export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
           readOnly={false}
           changeValue={setIfa}
         />
-        <View style={Styles.inputCardContainer}>
+        <View style={Styles.inputButtonContainer}>
           <SelectionNextCard
             selectionName="Next"
             onSelectionClick={() => navigateNextScreen()}>
           </SelectionNextCard>
         </View>
       </ScrollView>
+      </KeyboardAvoidingView>
     </View>
   );
 };
