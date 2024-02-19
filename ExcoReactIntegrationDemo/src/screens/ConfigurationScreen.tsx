@@ -13,33 +13,6 @@ const Styles = StyleSheet.create({
     keyboardAvoidingContainer: {
       flex: 1,
     },
-    inner: {
-      padding: 24,
-      flex: 1,
-      justifyContent: 'space-around',
-    },
-    header: {
-      fontSize: 36,
-      marginBottom: 48,
-    },
-    textInput: {
-      height: 40,
-      borderColor: '#000000',
-      borderBottomWidth: 1,
-      marginBottom: 36,
-    },
-    btnContainer: {
-      backgroundColor: 'white',
-      marginTop: 12,
-    },
-    appbar: {
-      backgroundColor: '#12339A',
-    },
-    headerText: {
-      color: 'black',
-      fontSize: 14,
-      fontWeight: '500',
-    },
     input: {
       marginTop: 8,
       borderWidth: 1,
