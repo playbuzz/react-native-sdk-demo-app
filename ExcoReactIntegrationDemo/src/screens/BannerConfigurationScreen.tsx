@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { OptionButton } from '../views/OptionButton'
 import React from 'react';
-import { ExcoPlayerPosition } from  '@gini-npm/react-native-exco-player'
+import { ExcoPlayerPosition } from  '@exco-npm/react-native-exco-player'
 
 const styles = StyleSheet.create({
   textMain: {

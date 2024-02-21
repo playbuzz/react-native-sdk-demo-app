@@ -4,8 +4,9 @@ import {
   ExcoPlayerView , 
   ExcoPlayerViewControlDelegate, 
   ExcoPlayerViewErrorDelegate, 
-  ExcoPlayerViewAdDelegate
- } from '@gini-npm/react-native-exco-player';
+  ExcoPlayerViewAdDelegate,
+  ExcoPlayerPosition
+ } from '@exco-npm/react-native-exco-player';
 
 const TextUtils = {
   DUMMY_TEXT: `
