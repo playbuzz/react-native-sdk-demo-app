@@ -4,8 +4,7 @@ import {
   ExcoPlayerView , 
   ExcoPlayerViewControlDelegate, 
   ExcoPlayerViewErrorDelegate, 
-  ExcoPlayerViewAdDelegate,
-  ExcoPlayerPosition
+  ExcoPlayerViewAdDelegate
  } from '@exco-npm/react-native-exco-player';
 
 const TextUtils = {
