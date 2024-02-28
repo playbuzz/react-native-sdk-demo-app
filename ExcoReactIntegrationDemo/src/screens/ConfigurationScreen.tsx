@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, ScrollView, Text, StyleSheet, Button, TextInput } from 'react-native';
+import { View, ScrollView, Text, StyleSheet, TextInput, KeyboardAvoidingView, Platform,
+} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { SelectionNextCard } from '../views/SelectionCard';
 
@@ -9,13 +10,8 @@ const Styles = StyleSheet.create({
       flex: 1,
       backgroundColor: '#fff',
     },
-    appbar: {
-      backgroundColor: '#12339A',
-    },
-    headerText: {
-      color: 'black',
-      fontSize: 14,
-      fontWeight: '500',
+    keyboardAvoidingContainer: {
+      flex: 1,
     },
     input: {
       marginTop: 8,
@@ -37,7 +33,7 @@ const Styles = StyleSheet.create({
       marginTop: 20,
     },
     inputButtonContainer: {
-      marginTop: 30,
+      marginVertical: 30,
     },
     inputCardHeaderText: {
       color: 'black',
@@ -104,6 +100,11 @@ export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
 
   return (
     <View style={Styles.container}>
+      <KeyboardAvoidingView
+              style={Styles.keyboardAvoidingContainer}
+              behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+              keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
+              >
       <ScrollView style = {{padding:0}}>
         <InputCard
           inputName="AppName"
@@ -168,13 +169,14 @@ export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
           readOnly={false}
           changeValue={setIfa}
         />
-        <View style={Styles.inputCardContainer}>
+        <View style={Styles.inputButtonContainer}>
           <SelectionNextCard
             selectionName="Next"
             onSelectionClick={() => navigateNextScreen()}>
           </SelectionNextCard>
         </View>
       </ScrollView>
+      </KeyboardAvoidingView>
     </View>
   );
 };
