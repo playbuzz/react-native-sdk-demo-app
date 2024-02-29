@@ -105,7 +105,7 @@ android {
 }
 repositories {
   maven {
-    url "https://giniapps.jfrog.io/artifactory/client-libs-gradle-dev"
+    url "https://exco1.jfrog.io/artifactory/android-gradle-release-local"
   }
 }
 dependencies {
