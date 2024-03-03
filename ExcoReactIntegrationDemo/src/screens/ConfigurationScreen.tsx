@@ -124,7 +124,7 @@ export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
           inputName="PlayerId"
           inputTip="Enter your unique player ID"
           inputText={playerId}
-          readOnly={true}
+          readOnly={false}
           changeValue={setPlayerId}
         />
         <InputCard
