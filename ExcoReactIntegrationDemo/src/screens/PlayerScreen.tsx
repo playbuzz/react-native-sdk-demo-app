@@ -67,15 +67,21 @@ export const PlayerScreen = ({ route, navigation }) => {
 
   const scrollState = new Animated.Value(0);
 
-    const delegateControl = new ExcoPlayerViewControlDelegate(
-      () => console.log('Player Initiated'),
-      () => console.log('Player Loaded'),
-      () => console.log('Player Playing'),
-      () => console.log('Player Paused'),
-      () => console.log('Player Muted'),
-      () => console.log('Player Unmuted'),
-      () => console.log('Player Closed')
-    );
+  const delegateControl = new ExcoPlayerViewControlDelegate(
+    () => console.log('Player Initiated'),
+    () => console.log('Player Loaded'),
+    () => console.log('Player Playing'),
+    () => console.log('Player Paused'),
+    () => console.log('Player Muted'),
+    () => console.log('Player Unmuted'),
+    () => console.log('Player Closed'),
+    () => console.log('Player DidFailLoading'),
+    () => console.log('Player DidFinishLoading'),
+    () => console.log('Player PlayerClickedCTA'),
+    () => console.log('Player PlayerEnterFullScreen'),
+    () => console.log('Player PlayerExitFullScreen'),
+    () => console.log('Player UnknownEvent'),
+  );
     const delegateError = new ExcoPlayerViewErrorDelegate(
       (payload) => console.log('error message: ' + payload)
     );
