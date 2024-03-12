@@ -128,6 +128,18 @@ export const PlayerScreen = ({ route, navigation }) => {
             <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
             <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
             <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
+            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
+            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
+            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
+            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
+            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
+            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
+            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
+            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
+            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
+            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
+            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
+            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
           </View>
         </ScrollView>
       </SafeAreaView>
