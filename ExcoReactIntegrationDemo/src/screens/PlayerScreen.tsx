@@ -6,6 +6,7 @@ import {
   ExcoPlayerViewErrorDelegate, 
   ExcoPlayerViewAdDelegate
  } from '@exco-npm/react-native-exco-player';
+ import DeviceInfo from 'react-native-device-info';
 
 const TextUtils = {
   DUMMY_TEXT: `
@@ -13,6 +14,7 @@ const TextUtils = {
     Lacinia quis vel eros donec ac odio tempor orci dapibus. Tempor orci dapibus ultrices in iaculis nunc sed augue. Aliquet nibh praesent tristique magna sit amet purus.
   `,
 };
+const isTablet = DeviceInfo.isTablet();
 
 const styles = StyleSheet.create({
   container: {
@@ -33,10 +35,6 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     color: '#000',
-  },
-  player: {
-    width: 320,
-    height: 180,
   }
 });
 
@@ -117,7 +115,10 @@ export const PlayerScreen = ({ route, navigation }) => {
                 ifa : ifa,
                 playerType : miniPlayerType,
               } } 
-              style = {styles.player}
+              style = {{
+                height: isTablet ? 450 : 180,
+                width: isTablet ? 800 : 320
+              }}
               delegateControl = {delegateControl}
               delegateAds = {delegateAds}
               delegateErrors = {delegateError}
