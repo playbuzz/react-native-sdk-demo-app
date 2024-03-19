@@ -85,7 +85,7 @@ export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
 
   const [appVersion, setAppVersion] = useState('1.0.1');
   const [appDevices, setAppDevices] = useState('Pixel 6');
-  const [ifa, setIfa] = useState('19421jfas9f214jfs');
+  const [ifa, setIfa] = useState(DeviceInfo.getUniqueId());
 
   const navigateNextScreen = () => {
     navigation.navigate('PlayerScreen',{
