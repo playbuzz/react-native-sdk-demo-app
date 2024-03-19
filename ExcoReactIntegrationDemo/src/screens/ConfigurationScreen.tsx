@@ -3,6 +3,7 @@ import { View, ScrollView, Text, StyleSheet, TextInput, KeyboardAvoidingView, Pl
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { SelectionNextCard } from '../views/SelectionCard';
+import { ExcoPlayerPosition } from '@exco-npm/react-native-exco-player';
 
 const Styles = StyleSheet.create({
     container: {
@@ -87,14 +88,15 @@ export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
   const [ifa, setIfa] = useState('19421jfas9f214jfs');
 
   const navigateNextScreen = () => {
-    navigation.navigate('MiniPlayerConfigurationScreen',{
+    navigation.navigate('PlayerScreen',{
       playerId:playerId,
       appCategory:appCategory,
       appStoreId:appStoreId,
       appStoreUrl:appStoreUrl,
       appVersion:appVersion,
       appDevices:appDevices,
-      ifa:ifa
+      ifa:ifa,
+      miniPlayerType: ExcoPlayerPosition.NONE
     })
   };
 
