@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, ScrollView, Text, StyleSheet, TextInput, KeyboardAvoidingView, Platform,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
@@ -85,8 +85,7 @@ export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
 
   const [appVersion, setAppVersion] = useState('1.0.1');
   const [appDevices, setAppDevices] = useState('Pixel 6');
-  const [ifa, setIfa] = useState(DeviceInfo.getUniqueId());
-
+  const [ifa, setIfa] = useState('');
   const navigateNextScreen = () => {
     navigation.navigate('PlayerScreen',{
       playerId:playerId,
