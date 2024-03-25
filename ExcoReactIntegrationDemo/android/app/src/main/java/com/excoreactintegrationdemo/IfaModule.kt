@@ -1,7 +1,5 @@
 package com.excoreactintegrationdemo
 
-import android.util.Log
-import com.facebook.react.bridge.BaseJavaModule
 import com.facebook.react.bridge.Callback
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReactContextBaseJavaModule
@@ -23,7 +21,6 @@ class IfaModule(private val reactApplicationContext: ReactApplicationContext): R
         try {
             // Call your method to retrieve the Advertising ID here
             val advertisingId = IfaUtils.ifa
-            Log.i("IfaUtils.ifa",advertisingId.toString())
             // Invoke the success callback with the Advertising ID
             callback.invoke(advertisingId)
         } catch (e: Exception) {

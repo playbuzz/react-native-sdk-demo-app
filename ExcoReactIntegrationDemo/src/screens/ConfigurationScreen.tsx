@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { View, ScrollView, Text, StyleSheet, TextInput, KeyboardAvoidingView, Platform,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { SelectionNextCard } from '../views/SelectionCard';
 import { ExcoPlayerPosition } from '@exco-npm/react-native-exco-player';
+import ReactNativeIdfaAaid, { AdvertisingInfoResponse } from '@sparkfabrik/react-native-idfa-aaid';
+
 import { NativeModules } from 'react-native';
 const IfaModule = NativeModules.IfaModule;
-
 const Styles = StyleSheet.create({
     container: {
       padding: 16,
@@ -91,11 +92,21 @@ export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
 
   
   useEffect(() => {
-    if (IfaModule) {
-      IfaModule.getAdvertisingId((ifa) => {
-        console.log('getAdvertisingId:', ifa);
-        setIfa(ifa);
-      });
+    if (Platform.OS === 'android') {
+      if (IfaModule) {
+        IfaModule.getAdvertisingId((ifa) => {
+          setIfa(ifa);
+        });
+      }
+    } else if (Platform.OS === 'ios'){
+      ReactNativeIdfaAaid.getAdvertisingInfo()
+      .then((res: AdvertisingInfoResponse) =>
+        !res.isAdTrackingLimited ? setIfa(res.id) : setIfa(''),
+      )
+      .catch((err) => {
+        console.log(err);
+        setIfa('');
+      })
     }
   }, []);
 
