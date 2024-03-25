@@ -4,6 +4,8 @@ import { View, ScrollView, Text, StyleSheet, TextInput, KeyboardAvoidingView, Pl
 import DeviceInfo from 'react-native-device-info';
 import { SelectionNextCard } from '../views/SelectionCard';
 import { ExcoPlayerPosition } from '@exco-npm/react-native-exco-player';
+import { NativeModules } from 'react-native';
+const IfaModule = NativeModules.IfaModule;
 
 const Styles = StyleSheet.create({
     container: {
@@ -86,6 +88,18 @@ export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
   const [appVersion, setAppVersion] = useState('1.0.1');
   const [appDevices, setAppDevices] = useState('Pixel 6');
   const [ifa, setIfa] = useState('');
+
+  
+  useEffect(() => {
+    if (IfaModule) {
+      IfaModule.getAdvertisingId((ifa) => {
+        console.log('getAdvertisingId:', ifa);
+        setIfa(ifa);
+      });
+    }
+  }, []);
+
+  
   const navigateNextScreen = () => {
     navigation.navigate('PlayerScreen',{
       playerId:playerId,
