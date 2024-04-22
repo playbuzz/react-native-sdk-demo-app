@@ -1,10 +1,11 @@
-import React from 'react';
-import { View, ScrollView, Text, StyleSheet, SafeAreaView, Animated } from 'react-native';
+import React, { useRef } from 'react';
+import { View, ScrollView, Text, StyleSheet, SafeAreaView, Animated, Button } from 'react-native';
 import { 
   ExcoPlayerView , 
   ExcoPlayerViewControlDelegate, 
   ExcoPlayerViewErrorDelegate, 
-  ExcoPlayerViewAdDelegate
+  ExcoPlayerViewAdDelegate,
+  ConfigurationOptions
  } from '@exco-npm/react-native-exco-player';
  import DeviceInfo from 'react-native-device-info';
 
@@ -58,9 +59,43 @@ export const PlayerScreen = ({ route, navigation }) => {
     appStoreUrl,
     appVersion,
     appDevices,
-    ifa
+    ifa,
+    isProgrammatic
   } = route.params;
-
+  
+  const configOptions: ConfigurationOptions = {
+    content: {
+      playFirst: [
+          {
+              id: "fa375-264b-4a86-809c-bbfc191532c1",
+              src: "https://mcd.ex.co/video/upload/v1490095101/landscape7a6fa375-264b-4a86-809c-bbfc191532c1.mp4",
+          },
+          {
+              id: "fa375-264b-4a86-809c-bbfc191532c2",
+              src: "https://mcd.ex.co/video/upload/v1490095101/landscape7a6fa375-264b-4a86-809c-bbfc191532c1.mp4",
+          },
+      ],
+      replacePlaylist: false,
+      tags: ["Sport", "Cinema"],
+      playlist: [
+          {
+              id: "fa375-264b-4a86-809c-bbfc191532c1",
+              src: "https://mcd.ex.co/video/upload/v1490095101/landscape7a6fa375-264b-4a86-809c-bbfc191532c1.mp4",
+          },
+          {
+              id: "fa375-264b-4a86-809c-bbfc191532c2",
+              src: "https://mcd.ex.co/video/upload/v1490095101/landscape7a6fa375-264b-4a86-809c-bbfc191532c1.mp4",
+          },
+      ],
+  },
+    playbackMode: 'auto-play',
+    autoPlay: false,
+    mute: false,
+    showAds: true,
+    customParams: {
+        customColor: "red",
+    },
+ };
   const appCategoryArray = appCategory.split(',').map((category: string) => category.trim());
 
   const scrollState = new Animated.Value(0);
@@ -80,50 +115,73 @@ export const PlayerScreen = ({ route, navigation }) => {
     () => console.log('Player PlayerExitFullScreen'),
     () => console.log('Player UnknownEvent'),
   );
-    const delegateError = new ExcoPlayerViewErrorDelegate(
-      (payload) => console.log('error message: ' + payload)
+  const delegateError = new ExcoPlayerViewErrorDelegate(
+    (payload) => console.log('error message: ' + payload)  
+  );
+  const delegateAds = new ExcoPlayerViewAdDelegate(
+   () => console.log('Player Ad Init'),
+   () => console.log('Player Ad Started'),
+   (payload) => console.log('Player Ad Impression ' + payload),
+   () => console.log('Player Ad FirstQuartile'),
+   () => console.log('Player Ad Midpoint'),
+   () => console.log('Player Ad ThirdQuartile'),
+   () => console.log('Player Ad Completed'),
+   () => console.log('Player Ad Clicked'),
+   () => console.log('Player Ad Skipped'),
     );
-    const delegateAds = new ExcoPlayerViewAdDelegate(
-      () => console.log('Player Ad Init'),
-      () => console.log('Player Ad Started'),
-      (payload) => console.log('Player Ad Impression ' + payload),
-      () => console.log('Player Ad FirstQuartile'),
-      () => console.log('Player Ad Midpoint'),
-      () => console.log('Player Ad ThirdQuartile'),
-      () => console.log('Player Ad Completed'),
-      () => console.log('Player Ad Clicked'),
-      () => console.log('Player Ad Skipped'),
-    );
+
+  const playerRef = useRef<any>(null);
+  const initializeProgrammaticPlayer = () => {
+    if (playerRef.current) {
+     playerRef.current.initProgrammaticPlayer(configOptions);
+    } else {
+       console.error("Player ref is not defined.");
+    }
+  };
     
-    return (
-      <SafeAreaView style={styles.container}>
-        <ScrollView
-          scrollEventThrottle={16}
-          onScroll={
-            Animated.event([{ nativeEvent: { contentOffset: { y: scrollState } } }],
-            { useNativeDriver: false } 
-          )}>
-          <View style={styles.playerContainer}>
-            <ExcoPlayerView 
-              nativeConfig = { { 
-                playerID: playerId,
-                appCategories : appCategoryArray,
-                appStoreId: appStoreId,
-                appStoreUrl: appStoreUrl,
-                appVersion: appVersion,
-                deviceId: appDevices,
-                ifa : ifa,
-                playerType : miniPlayerType,
-              } } 
-              style = {{
-                height: isTablet ? 450 : 180,
-                width: isTablet ? 800 : 320
-              }}
-              delegateControl = {delegateControl}
-              delegateAds = {delegateAds}
-              delegateErrors = {delegateError}
-            />
-          </View> 
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView
+        scrollEventThrottle={16}
+        onScroll={
+          Animated.event([{ nativeEvent: { contentOffset: { y: scrollState } } }],
+          { useNativeDriver: false } 
+        )}>
+        <View style={styles.playerContainer}>
+          <ExcoPlayerView 
+            ref = {playerRef}
+            nativeConfig = { { 
+              playerID: playerId,
+              appCategories : appCategoryArray,
+              appStoreId: appStoreId,
+              appStoreUrl: appStoreUrl,
+              appVersion: appVersion,
+              deviceId: appDevices,
+              ifa : ifa,
+              playerType : miniPlayerType,
+              isProgrammatic : isProgrammatic
+            } } 
+            style = {{
+              height: isTablet ? 450 : 180,
+              width: isTablet ? 800 : 320
+            }}
+            delegateControl = {delegateControl}
+            delegateAds = {delegateAds}
+            delegateErrors = {delegateError}
+          />
+        </View> 
+        <View style={styles.textAreaContainer}>
+        {isProgrammatic ? (
+          <View style={styles.textAreaContainer}>
+            <Button title="Player Init" onPress={initializeProgrammaticPlayer} />
+            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
+            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
+            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
+            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
+            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
+            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
+          </View>
+        ) : (
           <View style={styles.textAreaContainer}>
             <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
             <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
@@ -132,17 +190,10 @@ export const PlayerScreen = ({ route, navigation }) => {
             <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
             <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
             <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
-            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
-            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
-            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
-            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
-            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
-            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
-            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
-            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
-            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
           </View>
-        </ScrollView>
-      </SafeAreaView>
-    );
+        )}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
 };

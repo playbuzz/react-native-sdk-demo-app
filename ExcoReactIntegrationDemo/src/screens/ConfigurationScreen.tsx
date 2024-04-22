@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
-import { View, ScrollView, Text, StyleSheet, TextInput, KeyboardAvoidingView, Platform,
+import { View, ScrollView, Text, StyleSheet, TextInput, KeyboardAvoidingView, Platform, TouchableOpacity,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { SelectionNextCard } from '../views/SelectionCard';
@@ -52,6 +52,22 @@ const Styles = StyleSheet.create({
       padding: 8,
       color: 'black'
     },
+    checkboxContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 10,
+    },
+    checkbox: {
+      width: 20,
+      height: 20,
+      borderRadius: 5,
+      borderWidth: 2,
+      borderColor: '#000',
+      marginRight: 10,
+    },
+    checked: {
+      backgroundColor: '#000',
+    },
   });
 
 const InputCard = ({ inputName, inputTip, inputText, readOnly, changeValue }) => {
@@ -65,6 +81,17 @@ const InputCard = ({ inputName, inputTip, inputText, readOnly, changeValue }) =>
         placeholder={inputTip}
         style={Styles.inputCardInput}
       />
+    </View>
+  );
+};
+
+export const InputCheckBox = ({ inputName, toggleCheckbox, isChecked }) => {
+  return (
+    <View style={Styles.inputCardContainer}>
+      <Text style={Styles.inputCardHeaderText}>{inputName}</Text>
+      <TouchableOpacity onPress={toggleCheckbox} style={Styles.checkboxContainer}>
+        <View style={[Styles.checkbox, isChecked && Styles.checked]} />
+      </TouchableOpacity>
     </View>
   );
 };
@@ -85,6 +112,11 @@ export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
   const [appCategory, setAppCategory] = useState('Sport, Movie');
   const [appStoreUrl, setAppStoreUrl] = useState('https://appStoreUrl');
   const [appStoreId, setAppStoreId] = useState('412491294123');
+  const [isChecked, setIsChecked] = useState(false);
+
+  const toggleCheckbox = () => {
+    setIsChecked(!isChecked);
+  };
 
   const [appVersion, setAppVersion] = useState('1.0.1');
   const [appDevices, setAppDevices] = useState('Pixel 6');
@@ -120,7 +152,8 @@ export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
       appVersion:appVersion,
       appDevices:appDevices,
       ifa:ifa,
-      miniPlayerType: ExcoPlayerPosition.NONE
+      miniPlayerType: ExcoPlayerPosition.NONE,
+      isProgrammatic: isChecked
     })
   };
 
@@ -194,6 +227,12 @@ export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
           inputText={ifa}
           readOnly={false}
           changeValue={setIfa}
+        />
+        <InputCheckBox
+          inputName="isProgrammatic"
+          readOnly={false}
+          toggleCheckbox={toggleCheckbox}
+          isChecked={isChecked}
         />
         <View style={Styles.inputButtonContainer}>
           <SelectionNextCard
