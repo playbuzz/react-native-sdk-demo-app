@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { View, ScrollView, Text, StyleSheet, SafeAreaView, Animated, Button } from 'react-native';
+import React, { useRef, useState } from 'react';
+import { View, ScrollView, Text, StyleSheet, SafeAreaView, Animated, Button, FlatList } from 'react-native';
 import { 
   ExcoPlayerView , 
   ExcoPlayerViewControlDelegate, 
@@ -8,6 +8,7 @@ import {
   ConfigurationOptions
  } from '@exco-npm/react-native-exco-player';
  import DeviceInfo from 'react-native-device-info';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const TextUtils = {
   DUMMY_TEXT: `
@@ -36,7 +37,26 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     color: '#000',
-  }
+  },
+  eventItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    color: '#666',
+  },
+  eventType: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginRight: 10,
+    color: '#666',
+  },
+  eventPayload: {
+    fontSize: 14,
+    color: '#666',
+    marginRight:150
+  },
 });
 
 
@@ -60,7 +80,8 @@ export const PlayerScreen = ({ route, navigation }) => {
     appVersion,
     appDevices,
     ifa,
-    isProgrammatic
+    isProgrammatic,
+    Logger
   } = route.params;
   
   const configOptions: ConfigurationOptions = {
@@ -99,37 +120,42 @@ export const PlayerScreen = ({ route, navigation }) => {
   const appCategoryArray = appCategory.split(',').map((category: string) => category.trim());
 
   const scrollState = new Animated.Value(0);
+  
+  const [events, setEvents] = useState<{ eventType: string; payload?: any }[]>([]);
 
   const delegateControl = new ExcoPlayerViewControlDelegate(
-    () => console.log('Player Initiated'),
-    () => console.log('Player Loaded'),
-    () => console.log('Player Playing'),
-    () => console.log('Player Paused'),
-    () => console.log('Player Muted'),
-    () => console.log('Player Unmuted'),
-    () => console.log('Player Closed'),
-    () => console.log('Player DidFailLoading'),
-    () => console.log('Player DidFinishLoading'),
-    () => console.log('Player PlayerClickedCTA'),
-    () => console.log('Player PlayerEnterFullScreen'),
-    () => console.log('Player PlayerExitFullScreen'),
-    () => console.log('Player UnknownEvent'),
+    () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player Initiated' }]),
+    () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player Loaded' }]),
+    () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player Playing' }]),
+    () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player Paused' }]),
+    () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player Muted' }]),
+    () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player Unmuted' }]),
+    () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player Closed' }]),
+    () => console.log("PlayerDidFailLoading:"),  
+    () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player `DidFinishLoading' }]),
+    () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player PlayerClickedCTA' }]),
+    () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player PlayerEnterFullScreen' }]),
+    () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player PlayerExitFullScreen' }]),
+    () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player UnknownEvent' }]),
+    (payload) => setEvents(prevEvents => [...prevEvents, { eventType: 'Player GenericEvent', payload }]),
   );
+  
   const delegateError = new ExcoPlayerViewErrorDelegate(
-    (payload) => console.log('error message: ' + payload)  
+    (payload) => console.log("Error:",payload)  
   );
+  
   const delegateAds = new ExcoPlayerViewAdDelegate(
-   () => console.log('Player Ad Init'),
-   () => console.log('Player Ad Started'),
-   (payload) => console.log('Player Ad Impression ' + payload),
-   () => console.log('Player Ad FirstQuartile'),
-   () => console.log('Player Ad Midpoint'),
-   () => console.log('Player Ad ThirdQuartile'),
-   () => console.log('Player Ad Completed'),
-   () => console.log('Player Ad Clicked'),
-   () => console.log('Player Ad Skipped'),
-    );
-
+    () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player Ad Init' }]),
+    () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player Ad Started' }]),
+    (payload) => setEvents(prevEvents => [...prevEvents, { eventType: 'Player Ad Impression', payload }]),
+    () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player Ad FirstQuartile' }]),
+    () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player Ad Midpoint' }]),
+    () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player Ad ThirdQuartile' }]),
+    () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player Ad Completed' }]),
+    () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player Ad Clicked' }]),
+    () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player Ad Skipped' }]),
+  );
+  
   const playerRef = useRef<any>(null);
   const initializeProgrammaticPlayer = () => {
     if (playerRef.current) {
@@ -170,30 +196,23 @@ export const PlayerScreen = ({ route, navigation }) => {
             delegateErrors = {delegateError}
           />
         </View> 
-        <View style={styles.textAreaContainer}>
-        {isProgrammatic ? (
-          <View style={styles.textAreaContainer}>
-            <Button title="Player Init" onPress={initializeProgrammaticPlayer} />
-            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
-            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
-            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
-            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
-            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
-            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
-          </View>
-        ) : (
-          <View style={styles.textAreaContainer}>
-            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
-            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
-            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
-            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
-            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
-            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
-            <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
-          </View>
-        )}
-        </View>
+        {isProgrammatic && <View style={styles.textAreaContainer}>
+          <Button title="Player Init" onPress={initializeProgrammaticPlayer} />
+        </View>}
       </ScrollView>
+        {Logger &&
+           <FlatList
+           style={{ flex: 1, width: '100%', height: '60%', position: 'absolute', bottom: 0 , backgroundColor:"FFFFFF"}}
+           data={events}
+           renderItem={({ item }) => (
+             <View style={styles.eventItem}>
+               <Text style={styles.eventType}>{item.eventType}</Text>
+               {item.payload && <Text style={[styles.eventPayload, { flexWrap: 'wrap' }]}>{JSON.stringify(item.payload)}</Text>}
+             </View>
+           )}
+           keyExtractor={(item, index) => index.toString()}
+         />
+        }
     </SafeAreaView>
   );
 };

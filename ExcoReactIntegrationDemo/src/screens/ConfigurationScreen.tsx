@@ -108,16 +108,19 @@ export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
 
   const appName = DeviceInfo.getApplicationName()
   const yourAppBundle = "YourAppBundle"
-  const [playerId, setPlayerId] = useState('8bd39116-eacb-4b4e-a160-bedd5d71ce1c');
+  const [playerId, setPlayerId] = useState('85958501-aa63-4317-b103-5ea9f3a276f8');
   const [appCategory, setAppCategory] = useState('Sport, Movie');
   const [appStoreUrl, setAppStoreUrl] = useState('https://appStoreUrl');
   const [appStoreId, setAppStoreId] = useState('412491294123');
   const [isChecked, setIsChecked] = useState(false);
+  const [loggerIsChecked, setLoggerIsChecked] = useState(false);
 
   const toggleCheckbox = () => {
     setIsChecked(!isChecked);
   };
-
+  const toggleLoggerCheckbox = () => {
+    setLoggerIsChecked(!isChecked);
+  };
   const [appVersion, setAppVersion] = useState('1.0.1');
   const [appDevices, setAppDevices] = useState('Pixel 6');
   const [ifa, setIfa] = useState('');
@@ -153,7 +156,8 @@ export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
       appDevices:appDevices,
       ifa:ifa,
       miniPlayerType: ExcoPlayerPosition.NONE,
-      isProgrammatic: isChecked
+      isProgrammatic: isChecked,
+      Logger:loggerIsChecked
     })
   };
 
@@ -230,9 +234,13 @@ export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
         />
         <InputCheckBox
           inputName="isProgrammatic"
-          readOnly={false}
           toggleCheckbox={toggleCheckbox}
           isChecked={isChecked}
+        />
+         <InputCheckBox
+          inputName="Logger"
+          toggleCheckbox={setLoggerIsChecked}
+          isChecked={loggerIsChecked}
         />
         <View style={Styles.inputButtonContainer}>
           <SelectionNextCard
