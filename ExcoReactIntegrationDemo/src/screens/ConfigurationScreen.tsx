@@ -119,7 +119,7 @@ export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
     setIsChecked(!isChecked);
   };
   const toggleLoggerCheckbox = () => {
-    setLoggerIsChecked(!isChecked);
+    setLoggerIsChecked(!loggerIsChecked);
   };
   const [appVersion, setAppVersion] = useState('1.0.1');
   const [appDevices, setAppDevices] = useState('Pixel 6');
@@ -239,7 +239,7 @@ export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
         />
          <InputCheckBox
           inputName="Logger"
-          toggleCheckbox={setLoggerIsChecked}
+          toggleCheckbox={toggleLoggerCheckbox}
           isChecked={loggerIsChecked}
         />
         <View style={Styles.inputButtonContainer}>
