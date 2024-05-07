@@ -11,7 +11,7 @@ import {
  } from '@exco-npm/react-native-exco-player';
  import DeviceInfo from 'react-native-device-info';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
-import { Keyboard } from 'react-native';
+import { Platform, Keyboard } from 'react-native';
 
 const TextUtils = {
   DUMMY_TEXT: `
@@ -87,7 +87,8 @@ export const PlayerScreen = ({ route, navigation }) => {
     isProgrammatic,
     Logger
   } = route.params;
-  const height = isProgrammatic ? '45%' : '70%';
+  const isIOS = Platform.OS == 'ios';
+  const height = isProgrammatic ? (isIOS ? '40%' : '45%') : '70%';
 
   const configOptions: ConfigurationOptions = {
     content: {
@@ -173,7 +174,7 @@ export const PlayerScreen = ({ route, navigation }) => {
     () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player PlayerEnterFullScreen' }]),
     () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player PlayerExitFullScreen' }]),
     () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player UnknownEvent' }]),
-    (payload) => console.log("Player GenericEvent:",payload),
+    (payload) => setEvents(prevEvents => [...prevEvents, {eventType: "Player GenericEvent:",payload}]),
   );
   
   const delegateError = new ExcoPlayerViewErrorDelegate(
