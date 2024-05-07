@@ -173,7 +173,7 @@ export const PlayerScreen = ({ route, navigation }) => {
     () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player PlayerEnterFullScreen' }]),
     () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player PlayerExitFullScreen' }]),
     () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player UnknownEvent' }]),
-    (payload) => setEvents(prevEvents => [...prevEvents, { eventType: 'Player GenericEvent', payload }]),
+    (payload) => console.log("Player GenericEvent:",payload),
   );
   
   const delegateError = new ExcoPlayerViewErrorDelegate(
