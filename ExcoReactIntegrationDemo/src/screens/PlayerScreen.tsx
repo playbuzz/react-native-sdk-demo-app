@@ -7,7 +7,8 @@ import {
   ExcoPlayerViewAdDelegate,
   ConfigurationOptions,
   Playlist,
-  IndexObject
+  IndexObject,
+  ExcoPlayerPosition
  } from '@exco-npm/react-native-exco-player';
  import DeviceInfo from 'react-native-device-info';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
@@ -175,10 +176,11 @@ export const PlayerScreen = ({ route, navigation }) => {
     () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player PlayerExitFullScreen' }]),
     () => setEvents(prevEvents => [...prevEvents, { eventType: 'Player UnknownEvent' }]),
     (payload) => setEvents(prevEvents => [...prevEvents, {eventType: "Player GenericEvent:",payload}]),
+    (payload) => setEvents(prevEvents => [...prevEvents, {eventType: "Player GenericEvent:",payload}]),
   );
   
   const delegateError = new ExcoPlayerViewErrorDelegate(
-    (payload) => console.log("Error:",payload)  
+    (payload) => (console.log("Error:",payload))  
   );
   
   const delegateAds = new ExcoPlayerViewAdDelegate(
@@ -378,6 +380,16 @@ const handleSubmit = () => {
             <Button title="Set playList Index" onPress={handleSubmit} />
           </View>
         </View>
+        </View>}
+        {miniPlayerType !== ExcoPlayerPosition.NONE && <View style={styles.textAreaContainer}>
+          <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
+          <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
+          <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
+          <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
+          <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
+          <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
+          <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
+          <Text style={styles.text}>{TextUtils.DUMMY_TEXT}</Text>
         </View>}
       </ScrollView>
         {Logger &&

@@ -79,8 +79,8 @@ android {
         applicationId "com.excoreactintegrationdemo"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 11
-        versionName "11.0"
+        versionCode 12
+        versionName "12.0"
     }
     signingConfigs {
         debug {
@@ -104,10 +104,22 @@ android {
     }
 }
 repositories {
-  maven {
-    url "https://exco1.jfrog.io/artifactory/android-gradle-release-local"
-  }
+    def baseKey = "publication.exco"
+    def artifactoryUsername = providers.gradleProperty("${baseKey}.consumer.username").get()
+    def artifactoryPassword = providers.gradleProperty("${baseKey}.consumer.password").get()
+
+        google()
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven {
+          url = uri("https://exco1.jfrog.io/artifactory/android-gradle-dev/")
+          credentials {
+            username = artifactoryUsername
+            password = artifactoryPassword
+          }
+        }
 }
+
 dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")

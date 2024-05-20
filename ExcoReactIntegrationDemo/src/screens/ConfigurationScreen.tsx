@@ -147,7 +147,7 @@ export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
 
   
   const navigateNextScreen = () => {
-    navigation.navigate('PlayerScreen',{
+    navigation.navigate('MiniPlayerConfigurationScreen',{
       playerId:playerId,
       appCategory:appCategory,
       appStoreId:appStoreId,
@@ -155,7 +155,6 @@ export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
       appVersion:appVersion,
       appDevices:appDevices,
       ifa:ifa,
-      miniPlayerType: ExcoPlayerPosition.NONE,
       isProgrammatic: isChecked,
       Logger:loggerIsChecked
     })
