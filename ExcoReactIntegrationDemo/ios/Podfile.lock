@@ -2,7 +2,7 @@ PODS:
   - boost (1.83.0)
   - CocoaAsyncSocket (7.6.5)
   - DoubleConversion (1.1.6)
-  - ExcoMobileSDK (1.0.7)
+  - ExcoMobileSDK (1.1.1)
   - FBLazyVector (0.73.2)
   - FBReactNativeSpec (0.73.2):
     - RCT-Folly (= 2022.05.16.00)
@@ -946,8 +946,8 @@ PODS:
   - React-Mapbuffer (0.73.2):
     - glog
     - React-debug
-  - react-native-exco-player (0.2.6):
-    - ExcoMobileSDK (~> 1.0.1)
+  - react-native-exco-player (1.1.1):
+    - ExcoMobileSDK (~> 1.1.0)
     - glog
     - OMSDK_Exco (~> 1.4.8)
     - RCT-Folly (= 2022.05.16.00)
@@ -1132,6 +1132,8 @@ PODS:
     - RCT-Folly (= 2022.05.16.00)
     - React-Core
   - SocketRocket (0.6.1)
+  - sparkfabrik-react-native-idfa-aaid (1.1.1):
+    - React
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -1212,6 +1214,7 @@ DEPENDENCIES:
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - "sparkfabrik-react-native-idfa-aaid (from `../node_modules/@sparkfabrik/react-native-idfa-aaid`)"
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -1338,6 +1341,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  sparkfabrik-react-native-idfa-aaid:
+    :path: "../node_modules/@sparkfabrik/react-native-idfa-aaid"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -1345,7 +1350,7 @@ SPEC CHECKSUMS:
   boost: d3f49c53809116a5d38da093a8aa78bf551aed09
   CocoaAsyncSocket: 065fd1e645c7abab64f7a6a2007a48038fdc6a99
   DoubleConversion: fea03f2699887d960129cc54bba7e52542b6f953
-  ExcoMobileSDK: 1218632d963cea30e021a343836e96e522d37ea5
+  ExcoMobileSDK: 9c24bdeb68652fac1b5bb739272d954d5758946f
   FBLazyVector: fbc4957d9aa695250b55d879c1d86f79d7e69ab4
   FBReactNativeSpec: 86de768f89901ef6ed3207cd686362189d64ac88
   Flipper: c7a0093234c4bdd456e363f2f19b2e4b27652d44
@@ -1383,7 +1388,7 @@ SPEC CHECKSUMS:
   React-jsinspector: 03644c063fc3621c9a4e8bf263a8150909129618
   React-logger: 66b168e2b2bee57bd8ce9e69f739d805732a5570
   React-Mapbuffer: 9ee041e1d7be96da6d76a251f92e72b711c651d6
-  react-native-exco-player: a312ecd646d9b07efe4e892a8fd7b14247225f1b
+  react-native-exco-player: 7742aa8b3f976d1519fa398ca8b28536bafe53de
   react-native-safe-area-context: b97eb6f9e3b7f437806c2ce5983f479f8eb5de4b
   React-nativeconfig: d753fbbc8cecc8ae413d615599ac378bbf6999bb
   React-NativeModulesApple: 964f4eeab1b4325e8b6a799cf4444c3fd4eb0a9c
@@ -1409,8 +1414,9 @@ SPEC CHECKSUMS:
   RNGestureHandler: deda62b8339496ba721a45e0f3e2d7a319932cee
   RNScreens: b582cb834dc4133307562e930e8fa914b8c04ef2
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
+  sparkfabrik-react-native-idfa-aaid: ed2131b682314df45e829a08f7a5f4d67af9b8c1
   Yoga: 13c8ef87792450193e117976337b8527b49e8c03
 
 PODFILE CHECKSUM: b45216ae91daae7ef5af78e21ffc075e0111ad07
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.15.2

@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
-import { View, ScrollView, Text, StyleSheet, TextInput, KeyboardAvoidingView, Platform,
+import React, { Component, useEffect, useState } from 'react';
+import { View, ScrollView, Text, StyleSheet, TextInput, KeyboardAvoidingView, Platform, TouchableOpacity,
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { SelectionNextCard } from '../views/SelectionCard';
+import { ExcoPlayerPosition } from '@exco-npm/react-native-exco-player';
+import ReactNativeIdfaAaid, { AdvertisingInfoResponse } from '@sparkfabrik/react-native-idfa-aaid';
 
+import { NativeModules } from 'react-native';
+const IfaModule = NativeModules.IfaModule;
 const Styles = StyleSheet.create({
     container: {
       padding: 16,
@@ -48,6 +52,22 @@ const Styles = StyleSheet.create({
       padding: 8,
       color: 'black'
     },
+    checkboxContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 10,
+    },
+    checkbox: {
+      width: 20,
+      height: 20,
+      borderRadius: 5,
+      borderWidth: 2,
+      borderColor: '#000',
+      marginRight: 10,
+    },
+    checked: {
+      backgroundColor: '#000',
+    },
   });
 
 const InputCard = ({ inputName, inputTip, inputText, readOnly, changeValue }) => {
@@ -64,6 +84,17 @@ const InputCard = ({ inputName, inputTip, inputText, readOnly, changeValue }) =>
     </View>
   );
 };
+
+export const InputCheckBox = ({ inputName, toggleCheckbox, isChecked }) => {
+  return (
+    <View style={Styles.inputCardContainer}>
+      <Text style={Styles.inputCardHeaderText}>{inputName}</Text>
+      <TouchableOpacity onPress={toggleCheckbox} style={Styles.checkboxContainer}>
+        <View style={[Styles.checkbox, isChecked && Styles.checked]} />
+      </TouchableOpacity>
+    </View>
+  );
+};
   
 export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
   React.useLayoutEffect(() => {
@@ -77,24 +108,56 @@ export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
 
   const appName = DeviceInfo.getApplicationName()
   const yourAppBundle = "YourAppBundle"
-  const [playerId, setPlayerId] = useState('8bd39116-eacb-4b4e-a160-bedd5d71ce1c');
+  const [playerId, setPlayerId] = useState('85958501-aa63-4317-b103-5ea9f3a276f8');
   const [appCategory, setAppCategory] = useState('Sport, Movie');
   const [appStoreUrl, setAppStoreUrl] = useState('https://appStoreUrl');
   const [appStoreId, setAppStoreId] = useState('412491294123');
+  const [isChecked, setIsChecked] = useState(false);
+  const [loggerIsChecked, setLoggerIsChecked] = useState(false);
 
+  const toggleCheckbox = () => {
+    setIsChecked(!isChecked);
+  };
+  const toggleLoggerCheckbox = () => {
+    setLoggerIsChecked(!loggerIsChecked);
+  };
   const [appVersion, setAppVersion] = useState('1.0.1');
   const [appDevices, setAppDevices] = useState('Pixel 6');
-  const [ifa, setIfa] = useState('19421jfas9f214jfs');
+  const [ifa, setIfa] = useState('');
 
+  
+  useEffect(() => {
+    if (Platform.OS === 'android') {
+      if (IfaModule) {
+        IfaModule.getAdvertisingId((ifa) => {
+          setIfa(ifa);
+        });
+      }
+    } else if (Platform.OS === 'ios'){
+      ReactNativeIdfaAaid.getAdvertisingInfo()
+      .then((res: AdvertisingInfoResponse) =>
+        !res.isAdTrackingLimited ? setIfa(res.id) : setIfa(''),
+      )
+      .catch((err) => {
+        console.log(err);
+        setIfa('');
+      })
+    }
+  }, []);
+
+  
   const navigateNextScreen = () => {
-    navigation.navigate('MiniPlayerConfigurationScreen',{
+    navigation.navigate('PlayerScreen',{
       playerId:playerId,
       appCategory:appCategory,
       appStoreId:appStoreId,
       appStoreUrl:appStoreUrl,
       appVersion:appVersion,
       appDevices:appDevices,
-      ifa:ifa
+      ifa:ifa,
+      miniPlayerType: ExcoPlayerPosition.NONE,
+      isProgrammatic: isChecked,
+      Logger:loggerIsChecked
     })
   };
 
@@ -168,6 +231,16 @@ export const PlayerAttributesConfigurationScreen = ({ navigation }) => {
           inputText={ifa}
           readOnly={false}
           changeValue={setIfa}
+        />
+        <InputCheckBox
+          inputName="isProgrammatic"
+          toggleCheckbox={toggleCheckbox}
+          isChecked={isChecked}
+        />
+         <InputCheckBox
+          inputName="Logger"
+          toggleCheckbox={toggleLoggerCheckbox}
+          isChecked={loggerIsChecked}
         />
         <View style={Styles.inputButtonContainer}>
           <SelectionNextCard

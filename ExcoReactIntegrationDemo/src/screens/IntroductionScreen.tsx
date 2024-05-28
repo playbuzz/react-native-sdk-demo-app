@@ -51,7 +51,7 @@ export const IntroductionScreen = ({ navigation }) => {
       <View style={styles.cardContainer}>
         <SelectionCard
           selectionName="Configuration"
-          selectionAbout="To see how the player, please move forward and set player Configuration"
+          selectionAbout="To view the player, please proceed and configure the player configuration"
           onSelectionClick={() => navigation.navigate('PlayerAttributesConfigurationScreen')}
         />
       </View>
